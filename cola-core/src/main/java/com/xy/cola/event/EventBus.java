@@ -10,6 +10,7 @@ import com.xy.cola.logger.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -50,14 +51,7 @@ public class EventBus implements EventBusI {
      */
     @Override
     public void fire(EventI event) {
-        Response response = null;
-        EventHandlerI eventHandlerI = null;
-        try {
-            eventHandlerI = eventHub.getEventHandler(event.getClass()).get(0);
-            response = eventHandlerI.execute(event);
-        } catch (Exception exception) {
-            response = handleException(eventHandlerI, response, exception);
-        }
+        fireWithResponse(event);
     }
 
     /**
@@ -67,7 +61,37 @@ public class EventBus implements EventBusI {
      */
     @Override
     public void fireAll(EventI event) {
-        eventHub.getEventHandler(event.getClass()).stream().map(p -> {
+        fireAllWithResponse(event);
+    }
+
+    /**
+     * 触发事件总线中单个注册事件处理器
+     *
+     * @param event 事件
+     * @return 响应结果
+     */
+    @Override
+    public Response fireWithResponse(EventI event) {
+        Response response = null;
+        EventHandlerI eventHandlerI = null;
+        try {
+            eventHandlerI = eventHub.getEventHandler(event.getClass()).get(0);
+            response = eventHandlerI.execute(event);
+        } catch (Exception exception) {
+            response = handleException(eventHandlerI, response, exception);
+        }
+        return response;
+    }
+
+    /**
+     * 触发事件总线中所有注册事件处理器
+     *
+     * @param event 事件
+     * @return 响应结果
+     */
+    @Override
+    public List<Response> fireAllWithResponse(EventI event) {
+        return eventHub.getEventHandler(event.getClass()).stream().map(p -> {
             Response response = null;
             try {
                 response = p.execute(event);
@@ -85,6 +109,27 @@ public class EventBus implements EventBusI {
      */
     @Override
     public void asyncFire(EventI event) {
+        asyncFireWithResponse(event);
+    }
+
+    /**
+     * 异步触发事件总线中所有注册事件处理器
+     *
+     * @param event 事件
+     */
+    @Override
+    public void asyncFireAll(EventI event) {
+        asyncFireAllWithResponse(event);
+    }
+
+    /**
+     * 异步触发事件总线中单个注册事件处理器
+     *
+     * @param event 事件
+     * @return 响应结果
+     */
+    @Override
+    public Response asyncFireWithResponse(EventI event) {
         Response response = null;
         EventHandlerI eventHandlerI = null;
         try {
@@ -98,16 +143,18 @@ public class EventBus implements EventBusI {
         } catch (Exception exception) {
             response = handleException(eventHandlerI, response, exception);
         }
+        return response;
     }
 
     /**
      * 异步触发事件总线中所有注册事件处理器
      *
      * @param event 事件
+     * @return 响应结果
      */
     @Override
-    public void asyncFireAll(EventI event) {
-        eventHub.getEventHandler(event.getClass()).parallelStream().map(p -> {
+    public List<Response> asyncFireAllWithResponse(EventI event) {
+        return eventHub.getEventHandler(event.getClass()).parallelStream().map(p -> {
             Response response = null;
             try {
                 if (null != p.getExecutor()) {
