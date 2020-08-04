@@ -7,6 +7,7 @@ import com.xy.cola.logger.Logger;
 import com.xy.cola.logger.LoggerFactory;
 import com.xy.cola.test.example.command.CreditReduceCmd;
 import com.xy.cola.test.example.service.CreditServiceI;
+import org.springframework.core.annotation.Order;
 
 import javax.annotation.Resource;
 
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
  * @since [产品/模块版本] （可选）
  */
 @EventHandler
+@Order(1)
 public class OrderCreatedForCreditReduceEventHandler implements EventHandlerI<Response, OrderCreatedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderCreatedForCreditReduceEventHandler.class);
@@ -35,6 +37,7 @@ public class OrderCreatedForCreditReduceEventHandler implements EventHandlerI<Re
      */
     @Override
     public Response execute(OrderCreatedEvent event) {
+        logger.info("测试下执行器的排序，我是：OrderCreatedForCreditReduceEventHandler");
         CreditReduceCmd creditReduceCmd = new CreditReduceCmd();
         creditReduceCmd.setUserId(event.getUserId());
         creditReduceCmd.setUseCredit(event.getUseCredit());

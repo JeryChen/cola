@@ -31,11 +31,29 @@ public class DomainEventPublisher {
     }
 
     /**
+     * 同步处理发布
+     *
+     * @param domainEvent 域事件
+     */
+    public void publishAll(DomainEventI domainEvent) {
+        eventBus.fireAll(domainEvent);
+    }
+
+    /**
      * 异步处理发布
      *
      * @param domainEvent 域事件
      */
     public void asyncPublish(DomainEventI domainEvent) {
         eventBus.asyncFire(domainEvent);
+    }
+
+    /**
+     * 异步处理发布
+     *
+     * @param domainEvent 域事件
+     */
+    public void asyncPublishAll(DomainEventI domainEvent) {
+        eventBus.asyncFireAll(domainEvent);
     }
 }

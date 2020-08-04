@@ -40,7 +40,7 @@ public class OrderPlaceCmdExe {
         OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent();
         orderCreatedEvent.setUserId(orderPlaceCmd.getOrderCO().getUserId());
         orderCreatedEvent.setUseCredit(orderPlaceCmd.getUseCredit());
-        domainEventPublisher.asyncPublish(orderCreatedEvent);
+        domainEventPublisher.publishAll(orderCreatedEvent);
         return Response.buildSuccess();
     }
 }

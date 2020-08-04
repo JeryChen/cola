@@ -2,6 +2,7 @@ package com.xy.cola.event;
 
 import com.xy.cola.dto.Response;
 import com.xy.cola.exception.ColaException;
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -59,6 +60,7 @@ public class EventHub {
             eventRepository.put(eventClz, eventHandlers);
         }
         eventHandlers.add(executor);
+        AnnotationAwareOrderComparator.sort(eventHandlers);
     }
 
     /**

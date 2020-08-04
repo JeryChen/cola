@@ -39,7 +39,7 @@ public class OrderCommandTest extends BaseTest {
         orderPlaceCmd.setOrderCO(orderCO);
         BizScenario scenario = BizScenario.valueOf(BizConstants.PLACE_ORDER_BIZ_ID);
         orderPlaceCmd.setBizScenario(scenario);
-        orderPlaceCmd.setUseCredit(10);
+        orderPlaceCmd.setUseCredit(1);
         Response response = orderServiceI.placeOrder(orderPlaceCmd);
         Assert.assertTrue(response.isSuccess());
     }
