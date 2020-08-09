@@ -4,3 +4,5 @@
 本项目主要是基于阿里cola的核心组件cola-core的扩展功能的开发和一些问题修复，详细关于cola的介绍可以参考：https://www.cnblogs.com/yunqishequ/p/13321650.html， 原开源项目地址：https://github.com/alibaba/COLA。
 
 同时也欢迎各位大拿提出自己的想法和好的设计，共同把这个业务应用框架做的更强大，保持项目持续更新的状态。
+
+1.支持同步事件执行器排序，通过注解@Order来标识事件执行器处理顺序
