@@ -1,4 +1,4 @@
-package com.xy.cola.common;
+package com.xy.cola.dto;
 
 /**
  * 〈分表分页查询〉<p>

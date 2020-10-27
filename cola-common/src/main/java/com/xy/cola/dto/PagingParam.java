@@ -1,4 +1,4 @@
-package com.xy.cola.common;
+package com.xy.cola.dto;
 
 import java.io.Serializable;
 

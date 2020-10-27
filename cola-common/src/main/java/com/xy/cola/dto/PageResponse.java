@@ -1,7 +1,5 @@
 package com.xy.cola.dto;
 
-import com.xy.cola.common.PagingParam;
-
 /**
  * <功能介绍><br>
  * <p>
