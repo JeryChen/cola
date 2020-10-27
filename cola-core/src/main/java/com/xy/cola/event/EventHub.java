@@ -26,12 +26,12 @@ public class EventHub {
     /**
      * 事件处理器注册库容器
      */
-    private HashMap<Class, List<EventHandlerI>> eventRepository = new HashMap<>();
+    private final HashMap<Class, List<EventHandlerI>> eventRepository = new HashMap<>();
 
     /**
      * 事件响应结果注册库容器
      */
-    private Map<Class, Response> responseRepository = new HashMap<>();
+    private final Map<Class, Response> responseRepository = new HashMap<>();
 
     /**
      * 获取事件处理器
