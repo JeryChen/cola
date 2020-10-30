@@ -1,5 +1,9 @@
 package com.xy.cola.dto;
 
+import com.xy.cola.enums.ResponseCodeEnum;
+
+import java.util.Objects;
+
 /**
  * 〈功能介绍〉<br>
  * <p>
@@ -65,6 +69,22 @@ public class Response extends DTO {
         response.setSuccess(false);
         response.setCode(code);
         response.setMessage(message);
+        return response;
+    }
+
+    /**
+     * 构建失败响应结果
+     *
+     * @param responseCodeEnum 响应结果
+     * @return 响应结果
+     */
+    public static Response buildFailure(ResponseCodeEnum responseCodeEnum) {
+        Response response = new Response();
+        response.setSuccess(false);
+        if (Objects.nonNull(responseCodeEnum)) {
+            response.setCode(responseCodeEnum.getCode());
+            response.setMessage(responseCodeEnum.getDesc());
+        }
         return response;
     }
 
